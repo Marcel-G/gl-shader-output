@@ -16,12 +16,17 @@ module.exports = function (shader, opt) {
     float: true
   }, opt);
 
-  var gl = shader.gl || opt.gl || createGLContext(opt);
+  var gl;
 
-  // set gl context dims
-  gl.canvas.width = opt.width;
-  gl.canvas.height = opt.height;
+  if (process.browser) {
+    gl = shader.gl || opt.gl || createGLContext(opt);
 
+    // set gl context dims
+    gl.canvas.width = opt.width;
+    gl.canvas.height = opt.height;
+  } else {
+    gl = require('gl')(opt.width, opt.height, opt);
+  }
   // shader can be a function or string
   shader = typeof shader === 'function'
     ? shader(gl)
