@@ -28,7 +28,10 @@
   },
   "scripts": {
     "dev": "wzrd test/test.js -- -t glslify",
-    "test": "semistandard && browserify test/test.js -t glslify | tap-closer | smokestack | faucet"
+    "lint": "semistandard",
+    "test:browser": "browserify test/test.js -t glslify | tap-closer | smokestack | faucet",
+    "test:headless": "node test/headless-test.js",
+    "test": "npm run lint && npm run test:browser && npm run test:headless"
   },
   "keywords": [
     "test",
